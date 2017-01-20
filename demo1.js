@@ -1,11 +1,10 @@
-/**
- * Created by lcom73 on 20/1/17.
- */
+/*** Created by lcom73 on 20/1/17. */
+
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
-var router = express.Router();
+//var router = express.Router();
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/mydb'); // connect to our database
@@ -15,12 +14,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
-module.exports = app;
-
-router.route('/studs')
 // create a stud (accessed at POST http://localhost:8080/api/studs)
 
-    .get(function (req, res) {
+    app.get('/fetch',function (req, res) {
         Stud.find(function (err, data) {
             if (err)
                 res.send(err);
@@ -29,7 +25,8 @@ router.route('/studs')
         });
     })
 
-    .post(function (req, res) {
+    app.post('/insert',function (req, res) {
+
         var stud = new Stud();      // create a new instance of the stud model
 
         stud.name = req.body.name;  // set the bears name (comes from the request)
@@ -54,13 +51,11 @@ router.route('/studs/:sid')
     })
 
     .put(function (req, res) {
-
         // use our bear model to find the bear we want
         Stud.findById(req.params.sid, function (err, data) {
 
             if (err)
                 res.send(err);
-
             data.name = req.body.name;  // update the bears info
             data.marks = req.body.marks;  // update the bears info
 
@@ -72,7 +67,6 @@ router.route('/studs/:sid')
 
                 res.json({message: 'Bear updated!'});
             });
-
         });
     })
 
@@ -86,9 +80,6 @@ router.route('/studs/:sid')
             res.json({message: 'Successfully deleted'});
         });
     });
-
-// all of our routes will be prefixed with /api
-app.use('/api', router);   //for eg /api/studs
 
 var server = app.listen(8085, function () {
 
