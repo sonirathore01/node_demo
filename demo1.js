@@ -22,27 +22,31 @@ app.use(cookieParser());
                 res.send(err);
 
             res.json(data);
-        });
+        }).select('-marks');
     })
 
     app.post('/insert',function (req, res) {
 
         var stud = new Stud();      // create a new instance of the stud model
+        if(req.body.name != null || req.body.name != undefined || req.body.marks != null || req.body.marks != undefined ) {
+            stud.name = req.body.name;  // set the bears name (comes from the request)
+            stud.marks = req.body.marks;  // set the bears name (comes from the request)
+            stud.save(function (err) {
+                if (err)
+                    res.send(err);
 
-        stud.name = req.body.name;  // set the bears name (comes from the request)
-        stud.marks = req.body.marks;  // set the bears name (comes from the request)
-        stud.save(function (err) {
-            if (err)
-                res.send(err);
+                res.json({message: 'Bear created!'});
+            });
+        }
+        else
+            res.json({message: 'all fields are required!'});
 
-            res.json({message: 'Bear created!'});
-        });
     })
 
-router.route('/studs/:sid')
+//router.route('/studs/:sid')
 
 // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
-    .get(function (req, res) {
+    app.get('/fetch/:sid',function (req, res) {
         Stud.findById(req.params.sid, function (err, data) {
             if (err)
                 res.send(err);
@@ -50,8 +54,10 @@ router.route('/studs/:sid')
         });
     })
 
-    .put(function (req, res) {
+    app.put('/update/:sid',function (req, res) {
         // use our bear model to find the bear we want
+        // var queary = {name : 'yash'};
+        // Stud.update(queary,{name : 'dalal'});
         Stud.findById(req.params.sid, function (err, data) {
 
             if (err)
@@ -70,7 +76,7 @@ router.route('/studs/:sid')
         });
     })
 
-    .delete(function (req, res) {
+    app.delete('/delete/:sid',function (req, res) {
         Stud.remove({
             _id: req.params.sid
         }, function (err, stud) {
