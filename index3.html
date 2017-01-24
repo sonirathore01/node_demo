@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form name="myForm" onsubmit="return(validate())" action="http://127.0.0.1:8081/register" method="POST">
+    <h1>@@ Register yourself @@</h1>
+    <table>
+        <tr>
+        <th>
+            Name:<br><br>
+            Department:<br><br>
+            Username:<br><br>
+            Password:<br><br>
+            Confirm Password:<br><br>
+        </th>
+        <td>
+            <input type="text" name="name" required><br><br>
+            <input type="text" name="department" required><br><br>
+            <input type="email" name="username" required><br><br>
+            <input type="password" name="password" required><br><br>
+            <input type="password" name="cpassword" required><br><br>
+        </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Register"></td>
+        </tr>
+    </table>
+</form>
+
+<script type="text/javascript">
+    function validate() {
+        if (document.myForm.password.value != document.myForm.cpassword.value) {
+            alert("Both passwords must be same");
+            document.myForm.password.value = "";
+            document.myForm.cpassword.value = "";
+            document.myForm.password.focus();
+            return false;
+        }
+    }
+</script>
+
+<form action="http://127.0.0.1:8081/login" method="post">
+    <h1>@@ Sign in @@</h1>
+    <table>
+        <tr>
+            <th>
+                Username:<br><br>
+                Password:<br><br>
+            </th>
+            <td>
+                <input type="email" name="username" required><br><br>
+                <input type="password" name="password" required><br><br>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Sign in">
+</form>
+</body>
+</html>
