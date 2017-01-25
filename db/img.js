@@ -6,7 +6,8 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var img_schema   = new Schema({
-    img: {data: Buffer,contentType: String }
+    img_name : String,
+    img_path : String
 });
 
 module.exports = mongoose.model('Img', img_schema);
