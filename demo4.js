@@ -50,8 +50,6 @@ app.post('/upload', function(request, response) {
                 console.log(data);
             }
         });
-
-
     })
 });
 
