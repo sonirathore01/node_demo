@@ -2,10 +2,8 @@ function EmpController($http) {
     var BASE_API = 'http://127.0.0.1:8081/';
     var vm = this;
     getEmp();
-
     vm.Emp = {};
     vm.newEmp = {};
-
     vm.addEmp = function () {
         $http
             .post(BASE_API + "register", vm.newEmp)
@@ -17,7 +15,6 @@ function EmpController($http) {
             console.log(err);
         })
     };
-
     function getEmp() {
         $http
             .get(BASE_API + 'get')

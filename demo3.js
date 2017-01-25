@@ -31,16 +31,13 @@ app.get('/get', function (req, res) {
 })
 
 app.post('/register', function (req, res) {
-
     if (!req.body.name)
         return res.status(400).send({error: 'Name is required'});
     var emp = new Emp();      // create a new instance of the emp model
-
     emp.name = req.body.name;
     emp.department = req.body.department;
     emp.username = req.body.username;
     emp.password = req.body.password;
-
     Emp.find(function (err, data) {
         if (err) {
             return res.send(err);
