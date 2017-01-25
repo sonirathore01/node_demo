@@ -1,0 +1,33 @@
+<html ng-app='app'>
+<head>
+    <title>My new Angular app</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+</head>
+<body>
+
+    <div ng-controller="EmpController as vm">
+	<form ng-submit="vm.getEmp()">
+		<button type="submit">get emp</button>
+	</form>
+
+	<form ng-submit="vm.addEmp()">
+	        name:<input type="text" ng-model="vm.newEmp.name"><br>
+	        department:<input type="text" ng-model="vm.newEmp.department"><br>
+	        username:<input type="text" ng-model="vm.newEmp.username"><br>
+	        password:<input type="text" ng-model="vm.newEmp.password"><br>
+		<button type="submit">add emp</button>
+	</form>
+
+	<ul>
+		<li ng-repeat=" j in vm.Emp">
+			<p>{{j.name}}</p>
+			<p>{{j.department}}</p>
+			<p>{{j.username}}</p>
+			<p>{{j.password}}</p>
+		</li>
+	</ul>
+	</div>
+	<script src="js/app.js"></script>
+	<script src="js/EmpController.js"></script>
+</body>
+</html>
