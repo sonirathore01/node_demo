@@ -1,33 +1,59 @@
 <html ng-app='app'>
 <head>
     <title>My new Angular app</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 </head>
 <body>
 
-    <div ng-controller="EmpController as vm">
-	<form ng-submit="vm.getEmp()">
-		<button type="submit">get emp</button>
-	</form>
+<div ng-controller="EmpController as vm">
+    <form ng-submit="vm.getEmp()">
+        <button type="submit">get emp</button>
+    </form>
 
-	<form ng-submit="vm.addEmp()">
-	        name:<input type="text" ng-model="vm.newEmp.name"><br>
-	        department:<input type="text" ng-model="vm.newEmp.department"><br>
-	        username:<input type="text" ng-model="vm.newEmp.username"><br>
-	        password:<input type="text" ng-model="vm.newEmp.password"><br>
-		<button type="submit">add emp</button>
-	</form>
+    <form>
+        name:<input type="text" ng-model="vm.newEmp.name" required><br>
+        department:<input type="text" ng-model="vm.newEmp.department" required><br>
+        username:<input type="email" ng-model="vm.newEmp.username" required><br>
+        password:<input type="password" ng-model="vm.newEmp.password" required><br>
 
-	<ul>
-		<li ng-repeat=" j in vm.Emp">
-			<p>{{j.name}}</p>
-			<p>{{j.department}}</p>
-			<p>{{j.username}}</p>
-			<p>{{j.password}}</p>
-		</li>
-	</ul>
-	</div>
-	<script src="js/app.js"></script>
-	<script src="js/EmpController.js"></script>
+        <button type="submit" ng-click="vm.addEmp()">add emp</button>
+        <button type="submit" ng-click="vm.putEmp()">update emp</button>
+
+    </form>
+
+    <form ng-submit="vm.putEmp()">
+        Id:<input type="text" ng-model="vm.newEmp.id" required><br>
+        name:<input type="text" ng-model="vm.newEmp.name" required><br>
+        <button type="submit">update emp</button>
+    </form>
+
+    <form ng-submit="vm.delEmp()">
+        Id:<input type="text" ng-model="vm.newEmp.id" required><br>
+        <button type="submit">delete emp</button>
+    </form>
+
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+        <tr ng-repeat=" j in vm.Emp">
+            <td>{{j._id}}</td>
+            <td>{{j.name}}</td>
+            <td>{{j.department}}</td>
+            <td>{{j.username}}</td>
+            <td>{{j.password}}</td>
+            <td><button type="submit" ng-click="vm.edit(j)">edit</button></td>
+            <td><button type="submit" ng-click="vm.delEmp(j._id)">delete</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/EmpController.js"></script>
 </body>
 </html>
