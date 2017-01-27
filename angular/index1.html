@@ -4,12 +4,10 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 </head>
 <body>
-
     <div ng-controller="EmpController as vm">
-	<form ng-submit="vm.getEmp()">
+		<form ng-submit="vm.getEmp()">
 		<button type="submit">get emp</button>
 	</form>
-
 	<form ng-submit="vm.addEmp()">
 	        name:<input type="text" ng-model="vm.newEmp.name"><br>
 	        department:<input type="text" ng-model="vm.newEmp.department"><br>
