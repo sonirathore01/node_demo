@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+
+<head>
+    <title>My new Angular app</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+</head>
+
+<body>
+<div ng-controller="EmpController as vm">
+    <form name="registeration" onsubmit="return(validate())" ng-submit="vm.addEmp()">
+        <h1> Register yourself </h1>
+        <table>
+            <tr>
+                <th>
+                    Name:<br><br>
+                    Department:<br><br>
+                    Username:<br><br>
+                    Password:<br><br>
+                    Confirm Password:<br><br>
+                </th>
+                <td>
+                    <input type="text" name="name" ng-model="vm.newEmp.name" required>
+                        <span ng-show="registeration.name.$touched && registeration.name.$invalid">The name is required.</span><br><br>
+
+                    <input type="text" name="department" ng-model="vm.newEmp.department" required>
+                        <span ng-show="registeration.department.$touched && registeration.department.$invalid">The department is required.</span><br><br>
+
+                    <input type="email" name="username" ng-model="vm.newEmp.username" required>
+                        <span ng-show="registeration.username.$touched && registeration.username.$invalid && !registeration.username.$pristine">The username is required in email format.</span><br><br>
+
+                    <input type="password" name="password" ng-model="vm.newEmp.password" required>
+                        <span ng-show="registeration.password.$touched && registeration.password.$invalid">The password is required.</span><br><br>
+
+                    <input type="password" name="cpassword" ng-model="vm.newEmp.cpassword" match="vm.newEmp.password" required>
+                        <span ng-show="registeration.cpassword.$error.match">Both the password must be same.</span>
+                        <span ng-show="registeration.cpassword.$touched && registeration.cpassword.$invalid">The password is required.</span><br><br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit">Register</button>
+                </td>
+            </tr>
+        </table>
+        <script type="text/javascript">
+            function validate() {
+                if (document.registeration.password.value != document.registeration.cpassword.value) {
+                    alert("Both passwords must be same");
+                    console.log(document.registeration.cpassword.value);
+                    document.registeration.password.value = "";
+                    document.registeration.cpassword.value = "";
+                    document.registeration.password.focus();
+                    return false;
+                }
+                document.registeration.cpassword.value = "";
+            }
+        </script>
+    </form>
+
+    <form ng-submit="vm.logEmp()">
+        <h1> log in </h1>
+        <table>
+            <tr>
+                <th>
+                    Username:<br><br>
+                    Password:<br><br>
+                </th>
+                <td>
+                    <input type="email" ng-model="vm.newEmp.userid" required><br><br>
+                    <input type="password" ng-model="vm.newEmp.pwd" required><br><br>
+                </td>
+            </tr>
+        </table>
+        <button type="submit">Login</button>
+    </form>
+
+    <script src="./app.js"></script>
+    <script src="./controllers/EmpController.js"></script>
+</div>
+</body>
+</html>

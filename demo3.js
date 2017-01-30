@@ -31,9 +31,11 @@ app.get('/get', function (req, res) {
 });
 
 app.post('/register', function (req, res) {
+
     if (!req.body.name)
         return res.status(400).send({error: 'Name is required'});
     var emp = new Emp();      // create a new instance of the emp model
+
     emp.name = req.body.name;
     emp.department = req.body.department;
     emp.username = req.body.username;
@@ -52,22 +54,21 @@ app.put('/update/:sid', function (req, res) {
 
     Emp.findById(req.params.sid, function (err, data) {
 
-        if (err) {
+        if (err)
             return res.send(err);
 
-            data.name = req.body.name;  // update the bears info
-            data.department = req.body.department;
-            data.username = req.body.username;
-            data.password = req.body.password;
-            // data.marks = req.body.marks;  // update the bears info
-            // save the bear
-            data.save(function (err) {
-                if (err)
-                    res.send(err);
+        data.name = req.body.name;  // update the bears info
+        data.department = req.body.department;
+        data.username = req.body.username;
+        data.password = req.body.password;
+        // data.marks = req.body.marks;  // update the bears info
+        // save the bear
+        data.save(function (err) {
+            if (err)
+                res.send(err);
 
-                res.json({message: 'Bear updated!'});
-            });
-        }
+            res.json({message: 'Bear updated!'});
+        });
     });
 });
 
@@ -110,4 +111,5 @@ var server = app.listen(8081, function () {
     var port = server.address().port;
 
     console.log("Server started at http://%s:%s", host, port)
-})
+});
+
