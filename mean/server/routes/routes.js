@@ -9,7 +9,7 @@ var express = require('express');
 var Emp = require('../models/emp');
 
 router.get('/get', function (req, res) {
-    Emp.find({}, {_id: 0, __v: 0}, function (err, data) {
+    Emp.find({}, {__v: 0}, function (err, data) {
         if (err)
             return res.send(err);
 
@@ -18,6 +18,7 @@ router.get('/get', function (req, res) {
 });
 
 router.post('/register', function (req, res) {
+    console.log(req.body.name);
 
     if (req.body.name == null || req.body.name == undefined )
         return res.status(400).send({error: 'Name is required'});
@@ -54,15 +55,53 @@ router.post('/login', function (req, res) {
         } else {
             if (data.length == 0) {
                 res.send("Emloyee not registered!!!");
+                console.log("Emloyee not registered!!!");
             } else {
                 if (data[0].password == req.body.pwd) {
                     //var token = jwt.sign({username: data[0].username}, router.get('token'), {expiresIn: 60});
                     res.send({message: "successfully logged in"});
+                    console.log("successfully logged in!!!");
                 } else {
                     res.send({message: "authentication failed"});
+                    console.log("authentication failed!!!");
+
                 }
             }
         }
+    });
+});
+
+router.put('/update/:sid', function (req, res) {
+
+    if (!req.body.name)
+        return res.status(400).send({error: 'Name is required'});
+
+    Emp.findById(req.params.sid, function (err, data) {
+
+        if (err)
+            return res.send(err);
+
+        data.name = req.body.name;  // update the bears info
+        data.department = req.body.department;
+        data.username = req.body.username;
+        data.password = req.body.password;
+        data.save(function (err) {
+            if (err)
+                res.send(err);
+
+            res.json({message: 'Bear updated!'});
+        });
+    });
+});
+
+router.delete('/delete/:sid', function (req, res) {
+    Emp.remove({
+        _id: req.params.sid
+    }, function (err, stud) {
+        if (err)
+            res.send(err);
+
+        res.json({message: 'Successfully deleted'});
     });
 });
 
