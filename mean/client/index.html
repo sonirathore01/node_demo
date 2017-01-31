@@ -8,7 +8,7 @@
 
 <body>
 <div ng-controller="EmpController as vm">
-    <form name="registeration" onsubmit="return(validate())" ng-submit="vm.addEmp()">
+    <form name="registeration" onsubmit="return(validate())">
         <h1> Register yourself </h1>
         <table>
             <tr>
@@ -21,26 +21,34 @@
                 </th>
                 <td>
                     <input type="text" name="name" ng-model="vm.newEmp.name" required>
-                        <span ng-show="registeration.name.$touched && registeration.name.$invalid">The name is required.</span><br><br>
+                    <span ng-show="registeration.name.$touched && registeration.name.$invalid">The name is required.</span><br><br>
 
                     <input type="text" name="department" ng-model="vm.newEmp.department" required>
-                        <span ng-show="registeration.department.$touched && registeration.department.$invalid">The department is required.</span><br><br>
+                    <span ng-show="registeration.department.$touched && registeration.department.$invalid">The department is required.</span><br><br>
 
                     <input type="email" name="username" ng-model="vm.newEmp.username" required>
-                        <span ng-show="registeration.username.$touched && registeration.username.$invalid && !registeration.username.$pristine">The username is required in email format.</span><br><br>
+                    <span ng-show="registeration.username.$touched && registeration.username.$invalid && !registeration.username.$pristine">The username is required in email format.</span><br><br>
 
                     <input type="password" name="password" ng-model="vm.newEmp.password" required>
-                        <span ng-show="registeration.password.$touched && registeration.password.$invalid">The password is required.</span><br><br>
+                    <span ng-show="registeration.password.$touched && registeration.password.$invalid">The password is required.</span><br><br>
 
-                    <input type="password" name="cpassword" ng-model="vm.newEmp.cpassword" match="vm.newEmp.password" required>
-                        <span ng-show="registeration.cpassword.$error.match">Both the password must be same.</span>
-                        <span ng-show="registeration.cpassword.$touched && registeration.cpassword.$invalid">The password is required.</span><br><br>
+                    <input type="password" name="cpassword" ng-model="vm.newEmp.cpassword" match="vm.newEmp.password"
+                           required>
+                    <span ng-show="registeration.cpassword.$error.match">Both the password must be same.</span>
+                    <span ng-show="registeration.cpassword.$touched && registeration.cpassword.$invalid">The password is required.</span><br><br>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <button type="submit">Register</button>
-                </td>
+                <div ng-if="vm.flag">
+                    <td>
+                        <button type="submit" ng-click="vm.addEmp()">Register</button>
+                    </td>
+                </div>
+                <div ng-if="vm.flag">
+                    <td>
+                        <button type="submit" ng-click="vm.updateEmp(vm.newEmp.id)">Update</button>
+                    </td>
+                </div>
             </tr>
         </table>
         <script type="text/javascript">
@@ -74,6 +82,35 @@
         </table>
         <button type="submit">Login</button>
     </form>
+
+    <h1> Records </h1>
+    <h3> Search </h3>
+    <input type="text" ng-model="search" class="form-control" placeholder="Search">
+    <table border="1">
+        <thead>
+        <tr>
+            <!--<th ng-click="sort('_id')">Id</th>-->
+            <th ng-click="sort('name')">Name</th>
+            <th ng-click="sort('department')">Department</th>
+            <th ng-click="sort('username')">Username</th>
+            <th ng-click="sort('password')">Password</th>
+        </tr>
+        </thead>
+
+        <tr ng-repeat="i in vm.Emp | filter:search | orderBy:sortKey:reverse">
+            <!--<td>{{ i._id }}</td>-->
+            <td>{{ i.name }}</td>
+            <td>{{ i.department }}</td>
+            <td>{{ i.username }}</td>
+            <td>{{ i.password }}</td>
+            <td>
+                <button type="submit" ng-click="vm.edit(i)" name="edit">Edit</button>
+            </td>
+            <td>
+                <button type="submit" ng-click="vm.delete(i._id)" name="delete">Delete</button>
+            </td>
+        </tr>
+    </table>
 
     <script src="./app.js"></script>
     <script src="./controllers/EmpController.js"></script>
