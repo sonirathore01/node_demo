@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+
+<head>
+    <title> Home page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.js"></script>
+    <!-- Latest compiled and minified CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+</head>
+
+<body ng-controller="mainController">
+
+<h2>Welcome User</h2>
+
+<div class="bs-example bs-example-tabs">
+    <ul id="myTab" class="nav nav-tabs">
+        <li class=""><a href="signin.html" data-toggle="tab">Home</a></li>
+        <li class=""><a href="signup.html" data-toggle="tab">Profile</a></li>
+    </ul>
+</div>
+
+<div id="main">
+    <!-- angular templating -->
+    <!-- this is where content will be injected -->
+    <div ng-view></div>
+
+</div>
+<div class="modal-footer">
+    <center>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </center>
+</div>
+
+<script>
+    // create the module and name it scotchApp
+    var aApp = angular.module('app', ['ngRoute']);
+
+    // configure our routes
+    aApp.config(function($routeProvider) {
+        $routeProvider
+
+        // route for the home page
+            .when('/home', {
+                templateUrl : 'pages/home.html',
+                controller  : 'homeController'
+            })
+
+            // route for the profile page
+            .when('/profile', {
+                templateUrl : 'pages/profile.html',
+                controller  : 'profileController'
+            });
+    });
+
+    // create the controller and inject Angular's $scope
+
+    aApp.controller('homeController', function($scope) {
+        $scope.message = 'Look! Sign in page.';
+    });
+
+    aApp.controller('profileController', function($scope) {
+        $scope.message = 'This is Sign up page.';
+    });
+</script>
+</body>
+</html>

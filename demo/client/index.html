@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- CSS (load bootstrap) -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <style>
+        .navbar { border-radius:0; }
+    </style>
+
+    <!-- JS (load angular, ui-router, and our custom js file) -->
+    <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<!-- apply our angular app to our site -->
+<body ng-app="app">
+<script type="text/javascript">
+    function validate1() {
+        document.signin.username.value = "";
+        document.signin.password.value = "";
+    }
+
+    function validate2() {
+        if (document.signup.password.value != document.signup.cpassword.value) {
+            alert("Both passwords must be same");
+            console.log(document.signup.cpassword.value);
+            document.signup.password.value = "";
+            document.signup.cpassword.value = "";
+            document.signup.password.focus();
+            return false;
+        }
+        document.signup.cpassword.value = "";
+    }
+</script>
+<!-- NAVIGATION -->
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="#">AngularUI Router</a>
+    </div>
+    <ul class="nav navbar-nav">
+        <li><a ui-sref="signin">Sign in</a></li>
+        <li><a ui-sref="signup">Sign up</a></li>
+    </ul>
+</nav>
+<center>
+    <div class="container">
+        <div ui-view></div>
+    </div>
+</center>
+
+
+<footer class="text-center">
+    <p>View the tutorial: <a href="http://scotch.io/tutorials/javascript/angular-routing-using-ui-router" target="_blank">AngularJS Routing using UI-Router</a></p>
+</footer>
+
+
+<script src="./app.js"></script>
+<script src="./controllers/EmpController.js"></script>
+</body>
+</html>
