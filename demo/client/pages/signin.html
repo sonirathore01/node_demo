@@ -1,0 +1,34 @@
+<!-- Sign In Form -->
+
+<div class="tab-pane fade active in" id="signin" ng-controller="EmpController as vm">
+    <form name ="signin" class="form-horizontal" onsubmit="return(validate1())">
+        <fieldset>
+            <table>
+                <tr>
+                    <th class="control-label">Name:</th>
+                    <td>
+                        <input id="username" name="username" type="email" ng-model="vm.newEmp.username" class="form-control" placeholder="enter userid" class="input-medium" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="control-label">Password:</th>
+                    <td>
+                        <input id="password" name="password" type="password" ng-model="vm.newEmp.password" class="form-control" placeholder="enter password" class="input-medium" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me">Remember me!!
+                    </td>
+                </tr>
+                <tr>
+                    <th class="control-label"></th>
+                    <td>
+                        <button id="sign_in" name="signin" type="submit" ng-click="vm.signinEmp()" class="btn btn-success">Sign In</button>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+</div>
