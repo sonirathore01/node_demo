@@ -8,6 +8,7 @@ var empSchema   = new Schema({
     name: String,
     email: String,
     gender: String,
+    dob: Date,
     status: Boolean,
     state: String,
     city: String,
