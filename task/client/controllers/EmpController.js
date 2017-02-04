@@ -2,7 +2,7 @@
  * Created by lcom73 on 28/1/17.
  */
 angular
-    .module('app')
+    .module('app',['ngFileUpload'])
     .controller('EmpController', EmpController);
 
 function EmpController($scope,$http) {
@@ -22,13 +22,9 @@ function EmpController($scope,$http) {
         });
 
         vm.updateCity = function (id) {
-
-            console.log("city:",id);
-
             $http
                 .get(BASE_API + 'getcity/' + id)
                 .then(function (res) {
-                    debugger;
                     vm.cities = res.data;
                 }), (function (err) {
                 console.log(err);
@@ -63,8 +59,9 @@ function EmpController($scope,$http) {
             })
     }
 
-    vm.regEmp = function () {
+    vm.regEmp = function (x) {
         if(flag == 1){
+            console.log(x);
             $http
                 .post(BASE_API + "register", vm.newEmp)
                 .then(function (res) {

@@ -4,95 +4,103 @@
 <head>
     <title>My new Angular app</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="ng-file-upload-all.min.js"></script>
+    <script src="ng-file-upload-shim.min.js"></script>
 </head>
-
 <body>
-<div ng-controller="EmpController as vm">
-    <form name="registeration" enctype="multipart/form-data">
-        <h1> Register yourself </h1>
-        <table>
-            <tr>
-                <th>
-                    Name:<br><br>
-                    Email:<br><br>
-                    Gender:<br><br>
-                    Status:<br><br>
-                    State:<br><br>
-                    City:<br><br>
-                    Profile Image:<br><br>
-                </th>
-                <td>
-                    <input type="text" name="name" ng-model="vm.newEmp.name" required><br><br>
+			<div ng-controller="EmpController as vm">
+    			<form name="registeration" enctype="multipart/form-data">
+					<h1>Register</h1>
+					<table>
+            		<tr>
+                		<th>
+				<div class="input-group mb-1">
+                            	<span class="input-group-addon"><i class="icon-user"></i></span>
+				</div>
+                   		Name:<br><br>
+                    		Email:<br><br>
+                    		Gender:<br><br>
+                            Date:<br><br>
+                            Status:<br><br>
+                    		State:<br><br>
+                    		City:<br><br>
+                    		Profile Image:<br><br>
+                		</th>
+                		<td>
+                    		<input type="text" name="name" ng-model="vm.newEmp.name" class="form-control" placeholder="Username" required><br><br>
 
-                    <input type="email" name="email" ng-model="vm.newEmp.email" required><br><br>
+                    		<input type="email" name="email" ng-model="vm.newEmp.email" required><br><br>
 
-                    <input type="radio" name="gender" ng-model="vm.newEmp.gender" ng-value='"male"' required>Male
-                    <input type="radio" name="gender" ng-model="vm.newEmp.gender" ng-value='"female"' required>Female<br><br>
+                    		<input type="radio" name="gender" ng-model="vm.newEmp.gender" ng-value='"male"' required>Male
+                    		<input type="radio" name="gender" ng-model="vm.newEmp.gender" ng-value='"female"' required>Female<br><br>
 
-                    <input type="checkbox" ng-model="vm.newEmp.status"><br><br>
+                            <input type="date" ng-model="vm.newEmp.dob"><br><br>
 
-                    <select name="category-group" id="state"
-                            ng-model="vm.newEmp.state" ng-change="vm.updateCity(vm.newEmp.state._id)"
-                            ng-options="state as state.State_Name for state in vm.states">
-                        <option value="" selected disabled>State</option>
-                    </select>
+                            <input type="checkbox" ng-model="vm.newEmp.status"><br><br>
 
-                    <br><br>
+                    		<select name="category-group" id="state"
+                           		 ng-model="vm.newEmp.state" ng-change="vm.updateCity(vm.newEmp.state._id)"
+                            		 ng-options="state as state.State_Name for state in vm.states">
+                    		</select><br><br>
 
+                    		<select name="category-group" id="city"
+                            		ng-model="vm.newEmp.city"
+                            		ng-options="city as city.City_Name for city in vm.cities">
+                        	<option value="" disabled>City</option>
+                    		</select><br><br>
 
-                    <select name="category-group" id="city"
-                            ng-model="vm.newEmp.city"
-                            ng-options="city as city.City_Name for city in vm.cities">
-                        <option value="" selected disabled>City</option>
-                    </select>
+                            <input
+                                    type="file" ngf-select ng-model="vm.newEmp.profileimg"
+                                                name="profileimg" ngf-pattern="'image/*'"
+                                                accept="image/*">
+                            Image thumbnail: <img style="width:100px;" ngf-thumbnail="vm.newEmp.profileimg || '/thumb.jpg'"/>
+                		</td>
+            		</tr>
+            		<tr>
+                    		<td></td>
+                    		<td>
+                       			<button type="submit" ng-click="vm.regEmp()">Register</button>
+                    		</td>
+            		</tr>
+        		</table>
+   			</form>
 
-                    <input type="file" name="profileimg" ng-model="profileimg" ><br><br>
-                </td>
-            </tr>
-            <tr>
-                    <td></td>
-                    <td>
-                        <button type="submit" ng-click="vm.regEmp()">Register</button>
-                    </td>
-            </tr>
-        </table>
-    </form>
+    			<h1> Records </h1>
 
+    			<table border="1">
+       			<thead>
+        		<tr>
+            			<th>Name</th>
+            			<th>Email</th>
+            			<th>Gender</th>
+                        <th>Birth date</th>
+                        <th>Status</th>
+            			<th>State</th>
+            			<th>City</th>
+            			<th>Profile Image</th>
+        		</tr>
+        		</thead>
 
-    <h1> Records </h1>
+        		<tr ng-repeat="i in vm.Emp">
+            			<td>{{ i.name }}</td>
+            			<td>{{ i.email }}</td>
+            			<td>{{ i.gender }}</td>
+                        <td>{{ i.dob }}</td>
+                        <td>{{ i.status }}</td>
+            			<td>{{ i.state }}</td>
+            			<td>{{ i.city }}</td>
+           			<td>{{ i.profileimg }}</td>
+            			<td>
+                			<button type="submit" ng-click="vm.edit(i)" name="edit">Edit</button>
+            			</td>
+            			<td>
+                			<button type="submit" ng-click="vm.delete(i._id)" name="delete">Delete</button>
+            			</td>
+        		</tr>
+    			</table>
 
-    <table border="1">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>Status</th>
-            <th>State</th>
-            <th>City</th>
-            <th>Profile Image</th>
-        </tr>
-        </thead>
-
-        <tr ng-repeat="i in vm.Emp">
-            <td>{{ i.name }}</td>
-            <td>{{ i.email }}</td>
-            <td>{{ i.gender }}</td>
-            <td>{{ i.status }}</td>
-            <td>{{ i.state }}</td>
-            <td>{{ i.city }}</td>
-            <td>{{ i.profileimg }}</td>
-            <td>
-                <button type="submit" ng-click="vm.edit(i)" name="edit">Edit</button>
-            </td>
-            <td>
-                <button type="submit" ng-click="vm.delete(i._id)" name="delete">Delete</button>
-            </td>
-        </tr>
-    </table>
-
-    <script src="./controllers/app.js"></script>
-    <script src="./controllers/EmpController.js"></script>
-</div>
+    			<script src="./controllers/app.js"></script>
+    			<script src="./controllers/EmpController.js"></script>
+			</div>
 </body>
 </html>

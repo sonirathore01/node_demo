@@ -4,25 +4,9 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-
 var Emp = require('../models/emp');
 var State = require('../models/state');
 var City = require('../models/city');
-
-var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        req.body.path = "./uploads/";
-        callback(null, './uploads');
-    },
-    filename: function (req, file, callback) {
-        console.log("file:"+file.originalname);
-        file1=file.originalname.split(".");
-        req.body.file = file1[0]+"_"+Date.now()+"."+file1[file1.length -1];
-        callback(null,req.body.file);
-        //  callback(null, file.originalname)
-    }
-});
-var upload = multer({storage: storage}).single('photo');
 
 //get all records
 router.get('/get', function (req, res) {
@@ -47,7 +31,7 @@ router.get('/getstate', function (req, res) {
 
 //get city
 router.get('/getcity/:id', function(req, res) {
-    console.log("state",req.params.id);
+
     City.find({ State_id : {$eq: req.params.id}}).exec(function(err, cities) {
         if (err)
             res.send(err)
@@ -55,6 +39,7 @@ router.get('/getcity/:id', function(req, res) {
         res.json(cities);
     });
 });
+
 // //add state
 // router.post('/addstate', function (req, res) {
 //
@@ -82,26 +67,44 @@ router.get('/getcity/:id', function(req, res) {
 //     });
 // });
 
+/*
+var storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        req.body.path = "../uploads/";
+        callback(null, '../uploads');
+    },
+    filename: function (req, file, callback) {
+        var file1=file.originalname.split(".");
+        req.body.file = file1[0]+"_"+Date.now()+"."+file1[file1.length -1];
+        console.log("file:"+req.body.file);
+        callback(null,req.body.file);
+        //  callback(null, file.originalname)
+    }
+});
+*/
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname.split(".") + '-' + Date.now() + '.png')
+    }
+});
+
+var upload = multer({storage: storage}).single('file');
+
 //register employee details
-router.post('/register', function (req, res) {
-    upload(req, res, function(err) {
-        if(err) {
-            console.log(err);
-            return;
-        }
-        console.log("file:",req.body.file);
-        console.log("path",req.body.path+req.body.file);
-    });
+router.post('/register', multer({ dest: './uploads/'}).single('file'), function (req, res) {
 
     console.log(req.body.name);
     console.log(req.body.email);
     console.log(req.body.gender);
+    console.log(req.body.dob);
     console.log(req.body.status);
-    console.log(req.body.state);
-    console.log(req.body.city);
+    console.log(req.body.state.State_Name);
+    console.log(req.body.city.City_Name);
     console.log(req.body.file);
-
-
 
     if (req.body.name == null || req.body.name == undefined)
         return res.status(400).send({error: 'Name is required'});
@@ -123,9 +126,10 @@ router.post('/register', function (req, res) {
     emp.name = req.body.name;
     emp.email = req.body.email;
     emp.gender = req.body.gender;
+    emp.dob = req.body.dob;
     emp.status = req.body.status;
-    emp.state = req.body.state;
-    emp.city = req.body.city;
+    emp.state = req.body.state.State_Name;
+    emp.city = req.body.city.City_Name;
     emp.profileimg = req.body.file;
 
     emp.save(function (err) {
@@ -149,9 +153,10 @@ router.put('/update/:id', function (req, res) {
         data.name = req.body.name;  // update the bears info
         data.email = req.body.email;
         data.gender = req.body.gender;
+        emp.dob = req.body.dob;
         data.status = req.body.status;
-        data.state = req.body.state;
-        data.city = req.body.city;
+        data.state = req.body.state.State_Name;
+        data.city = req.body.city.City_Name;
         data.profileimg = req.body.file;
 
         data.save(function (err) {
