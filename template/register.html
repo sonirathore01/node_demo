@@ -1,0 +1,62 @@
+<div class="container d-table">
+    <div class="d-100vh-va-middle">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card mx-2">
+                    <div class="card-block p-2">
+                        <h1>Register</h1>
+                        <p class="text-muted">Create your account</p>
+                        <div ng-controller="EmpController as vm">
+                            <form name="registeration" enctype="multipart/form-data">
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><i class="icon-user"></i></span>
+                                                <input type="text" name="name" ng-model="vm.newEmp.name"
+                                                       class="form-control" placeholder="Username" required><br><br>
+                                            </div>
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><i class="icon-envelope"></i></span>
+                                                <input type="email" name="email" ng-model="vm.newEmp.email"
+                                                       class="form-control" placeholder="Email" required><br><br>
+                                            </div>
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><i class="icon-emotsmile"></i></span>
+                                                <input type="radio" name="gender" ng-model="vm.newEmp.gender"
+                                                       ng-value='"male"' class="form-control" required>Male
+                                                <input type="radio" name="gender" ng-model="vm.newEmp.gender"
+                                                       ng-value='"female"' class="form-control" required>Female<br><br>
+                                            </div>
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><i class="icon-diamond"></i></span>
+                                                <input type="checkbox" ng-model="vm.newEmp.status" class="form-control" placeholder="status"><br><br>
+                                            </div>
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><i class="icon-location-pin"></i></span>
+                                                <select name="category-group" id="state" class="form-control" placeholder="state"
+                                                        ng-model="vm.newEmp.state"
+                                                        ng-change="vm.updateCity(vm.newEmp.state._id)"
+                                                        ng-options="state as state.State_Name for state in vm.states">
+                                                </select><br><br>
+                                            </div>
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><i class="icon-location-pin"></i></span>
+                                                <select name="category-group" id="city" class="form-control" placeholder="city"
+                                                        ng-model="vm.newEmp.city"
+                                                        ng-options="city as city.City_Name for city in vm.cities">
+                                                    <option value="" disabled>City</option>
+                                                </select><br><br>
+                                            </div>
+                                            <div class="input-group mb-1">
+                                                <span class="input-group-addon"><i class="icon-picture"></i></span>
+                                                <input
+                                                        type="file" ngf-select ng-model="vm.newEmp.profileimg"
+                                                        name="profileimg" ngf-pattern="'image/*'" accept="image/*">
+                                            </div>
+                                        <button type="button" class="btn btn-block btn-success" ng-click="vm.regEmp()">Create Account</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

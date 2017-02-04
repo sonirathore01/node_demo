@@ -1,0 +1,78 @@
+<div class="modal-header">
+    <h3>Edit your Profile!</h3>
+</div>
+<div class="modal-body" style="height: 500px">
+        <div ng-controller="EmpController as vm">
+            <form name="registeration" enctype="multipart/form-data" style="width:350px; height: 50px">
+                <!--<table>-->
+                <!--<tr>-->
+                <!--<th>-->
+                <div class="input-group mb-1">
+                    <span class="input-group-addon"><i class="icon-user"></i></span>
+                    <input type="text" name="name" ng-model="vm.newEmp.name"
+                           class="form-control" placeholder="Username" required><br><br>
+                </div>
+                <!--Name:<br><br>-->
+                <div class="input-group mb-1">
+                    <span class="input-group-addon"><i class="icon-envelope"></i></span>
+                    <input type="email" name="email" ng-model="vm.newEmp.email"
+                           class="form-control" placeholder="Email" required><br><br>
+                </div>
+                <!--Email:<br><br>-->
+                <div class="input-group mb-1">
+                    <span class="input-group-addon"><i class="icon-emotsmile"></i></span>
+                    <input type="radio" name="gender" ng-model="vm.newEmp.gender"
+                           ng-value='"male"' class="form-control" required>Male
+                    <input type="radio" name="gender" ng-model="vm.newEmp.gender"
+                           ng-value='"female"' class="form-control" required>Female<br><br>
+                </div>
+                <!--Gender:<br><br>-->
+                <div class="input-group mb-1">
+                    <span class="input-group-addon"><i class="icon-diamond"></i></span>
+                    <input type="checkbox" ng-model="vm.newEmp.status" class="form-control" placeholder="status"><br><br>
+                </div>
+                <!--Status:<br><br>-->
+                <div class="input-group mb-1">
+                    <span class="input-group-addon"><i class="icon-location-pin"></i></span>
+                    <select name="category-group" id="state" class="form-control" placeholder="state"
+                            ng-model="vm.newEmp.state"
+                            ng-change="vm.updateCity(vm.newEmp.state._id)"
+                            ng-options="state as state.State_Name for state in vm.states">
+                    </select><br><br>
+                </div>
+                <!--State:<br><br>-->
+                <div class="input-group mb-1">
+                    <span class="input-group-addon"><i class="icon-location-pin"></i></span>
+                    <select name="category-group" id="city" class="form-control" placeholder="city"
+                            ng-model="vm.newEmp.city"
+                            ng-options="city as city.City_Name for city in vm.cities">
+                        <option value="" disabled>City</option>
+                    </select><br><br>
+                </div>
+                <!--City:<br><br>-->
+                <div class="input-group mb-1">
+                    <span class="input-group-addon"><i class="icon-picture"></i></span>
+                    <input
+                            type="file" ngf-select ng-model="vm.newEmp.profileimg"
+                            name="profileimg" ngf-pattern="'image/*'" accept="image/*">
+                </div>
+                <!--Profile Image:<br><br>-->
+                <!--</th>-->
+                <!--<td>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td></td>-->
+                <!--<td>-->
+                <button type="button" class="btn btn-block btn-success" ng-click="vm.updateEmp()">update profile</button>
+                <!--<button type="submit" ng-click="vm.regEmp()">Register</button>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--</table>-->
+            </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" ng-click="updateProfile()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
