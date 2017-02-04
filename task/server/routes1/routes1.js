@@ -67,35 +67,23 @@ router.get('/getcity/:id', function(req, res) {
 //     });
 // });
 
-/*
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        req.body.path = "../uploads/";
-        callback(null, '../uploads');
+        req.body.path = "./uploads/";
+        callback(null, './uploads');
     },
     filename: function (req, file, callback) {
         var file1=file.originalname.split(".");
         req.body.file = file1[0]+"_"+Date.now()+"."+file1[file1.length -1];
         console.log("file:"+req.body.file);
         callback(null,req.body.file);
-        //  callback(null, file.originalname)
-    }
-});
-*/
-
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '../uploads')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname.split(".") + '-' + Date.now() + '.png')
     }
 });
 
-var upload = multer({storage: storage}).single('file');
+var upload = multer({storage: storage}).single('profileimg');
 
 //register employee details
-router.post('/register', multer({ dest: './uploads/'}).single('file'), function (req, res) {
+router.post('/register', upload, function (req, res) {
 
     console.log(req.body.name);
     console.log(req.body.email);
