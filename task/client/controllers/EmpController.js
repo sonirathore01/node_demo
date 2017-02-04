@@ -59,36 +59,6 @@ function EmpController($scope,$http,Upload) {
             })
     }
 
-    // vm.regEmp = function () {
-    //     if(flag == 1){
-    //         console.log(vm.newEmp.profileimg);
-    //         Upload.upload({
-    //         $http
-    //             .post(BASE_API + "register", vm.newEmp)
-    //             .then(function (res) {
-    //                 console.log(res);
-    //                 vm.Emp.push(vm.newEmp);
-    //                 getEmp();
-    //                 vm.newEmp = {};
-    //             }, function (err) {
-    //                 console.log(err);
-    //             })
-    //     }else{
-    //         $http
-    //             .put(BASE_API + "update/" + vm.newEmp._id, vm.newEmp)
-    //             .then(function (res) {
-    //                 getEmp();
-    //                 console.log(res);
-    //                 vm.newEmp = {};
-    //                 flag = 1;
-    //             }, function (err) {
-    //                 console.log(err);
-    //             })
-    //         flag = 1;
-    //     }
-    //     })
-    // };
-
     vm.regEmp = function () {
         if(flag == 1) {
             Upload.upload({
