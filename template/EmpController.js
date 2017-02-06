@@ -206,5 +206,4 @@ function EmpController($scope,$http,Upload) {
             $modalInstance.dismiss('cancel');
         };
     };
-
 }
