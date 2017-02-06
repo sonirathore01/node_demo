@@ -7,10 +7,25 @@ var multer = require('multer');
 var Emp = require('../models/emp');
 var State = require('../models/state');
 var City = require('../models/city');
+var index = require('../../client/index.html');
+
+router.get('/', function (req, res) {
+    res.sendFile(__dirname + index);
+});
 
 //get all records
 router.get('/get', function (req, res) {
     Emp.find({}, {__v: 0}, function (err, data) {
+        if (err)
+            return res.send(err);
+
+        return res.json(data);
+    });
+});
+
+//get record by Id
+router.get('/get/:id', function (req, res) {
+    Emp.findById(req.params.id, function (err, data) {
         if (err)
             return res.send(err);
 

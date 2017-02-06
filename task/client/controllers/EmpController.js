@@ -5,7 +5,7 @@ angular
     .module('app',['ngFileUpload'])
     .controller('EmpController', EmpController);
 
-function EmpController($scope,$http) {
+function EmpController($scope,$http,Upload) {
     var BASE_API = 'http://127.0.0.1:8081/';
     var vm = this;
     var flag = 1;
@@ -59,33 +59,29 @@ function EmpController($scope,$http) {
             })
     }
 
-    vm.regEmp = function (x) {
-        if(flag == 1){
-            console.log(x);
-            $http
-                .post(BASE_API + "register", vm.newEmp)
-                .then(function (res) {
-                    console.log(res);
-                    vm.Emp.push(vm.newEmp);
-                    getEmp();
-                    vm.newEmp = {};
-                }, function (err) {
-                    console.log(err);
-                })
+    vm.regEmp = function () {
+        if(flag == 1) {
+            Upload.upload({
+                url: '/register',
+                method: 'POST',
+                data: vm.newEmp
+            }).then(function (response) {
+                vm.Emp.push(vm.newEmp);
+                getEmp();
+                vm.newEmp = {};
+            })
         }else{
-            $http
-                .put(BASE_API + "update/" + vm.newEmp._id, vm.newEmp)
-                .then(function (res) {
-                    getEmp();
-                    console.log(res);
-                    vm.newEmp = {};
-                    flag = 1;
-                }, function (err) {
-                    console.log(err);
-                })
-            flag = 1;
+            Upload.upload({
+                url: '/update/ + vm.newEmp._id',
+                method: 'PUT',
+                data: vm.newEmp
+            }).then(function (response) {
+                vm.Emp.push(vm.newEmp);
+                getEmp();
+                vm.newEmp = {};
+            })
         }
-    };
+    }
 
     vm.edit = function (j) {
         vm.newEmp = j;

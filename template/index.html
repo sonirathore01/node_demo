@@ -1,0 +1,51 @@
+<div class="container d-table">
+
+    <div class="d-100vh-va-middle">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card mx-2">
+                    <div class="card-block p-2">
+                        <h1>Register</h1>
+                        <p class="text-muted">Create your account</p>
+                        <div ng-controller="EmpController as vm">
+
+                            <h1> Records </h1>
+                            <div class="card-block">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Gender</th>
+                                        <th>Status</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                        <th>Profile Image</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tr ng-repeat="i in vm.Emp">
+                                        <td>{{ i.name }}</td>
+                                        <td>{{ i.email }}</td>
+                                        <td>{{ i.gender }}</td>
+                                        <td>{{ i.status }}</td>
+                                        <td>{{ i.state }}</td>
+                                        <td>{{ i.city }}</td>
+                                        <td>{{ i.profileimg }}</td>
+                                        <td>
+                                            <button type="submit" ng-click="vm.edit(i)" name="edit">Edit</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" ng-click="vm.delete(i._id)" name="delete">Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
