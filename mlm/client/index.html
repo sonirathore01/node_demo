@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- CSS (load bootstrap) -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <style>
+        .navbar { border-radius:0; }
+    </style>
+
+    <!-- JS (load angular, ui-router, and our custom js file) -->
+    <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<!-- apply our angular app to our site -->
+<body ng-app="app">
+<!-- NAVIGATION -->
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="#"> MLM app </a>
+    </div>
+</nav>
+<center>
+    <div class="container">
+        <div ng-controller="CustController as vm">
+            <div class="container">
+                <form name="signin" class="form-horizontal">
+                    <fieldset>
+                        <table>
+                            <tr>
+                                <th class="control-label">Name:</th>
+                                <td>
+                                    <input id="username" name="username" type="text" ng-model="vm.newCust.username"
+                                           class="form-control" placeholder="enter username" class="input-medium" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="control-label">Password:</th>
+                                <td>
+                                    <input id="password" name="password" type="password" ng-model="vm.newCust.password"
+                                           class="form-control" placeholder="enter password" class="input-medium" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="control-label"></th>
+                                <td>
+                                    <button id="sign_in" name="signin" type="submit" ng-click="vm.signinCust()"
+                                            class="btn btn-success">Sign In
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</center>
+
+
+
+
+<script src="./app.js"></script>
+<script src="./controllers/CustController.js"></script>
+</body>
+</html>
