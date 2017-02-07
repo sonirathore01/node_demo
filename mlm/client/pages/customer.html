@@ -10,8 +10,8 @@
     <table class="table" border="1">
         <thead>
         <tr>
-            <th ng-click="sort('name')">Name</th>
-            <th ng-click="sort('parent')">Parent</th>
+            <th ng-click="vm.sort('name')">Name</th>
+            <th ng-click="vm.sort('parent')">Parent</th>
             <th>Profile</th>
             <th></th>
             <th></th>
@@ -21,12 +21,12 @@
         <tr ng-repeat="i in vm.Cust">
             <td>{{ i.name }}</td>
             <td>{{ i.parent }}</td>
-            <td>{{i.profile}}</td>
+            <td>{{ i.profile }}</td>
             <td>
-                <button type="submit" ng-click="vm.edit(i)" name="edit" class="btn btn-success">Edit</button>
+                <button type="submit" ng-click="vm.editForm(i._id)" name="edit" class="btn btn-success">Edit</button>
             </td>
             <td>
-                <button type="submit" ng-click="vm.delete(i._id)" name="delete" class="btn btn-delete">Delete</button>
+                <button type="submit" ng-click="vm.deleteForm(i._id)" name="delete" class="btn btn-danger">Delete</button>
             </td>
         </tr>
     </table>
