@@ -51,7 +51,7 @@ function CustController($scope,$http,$window,Upload,$modal) {
     vm.delete = function (id) {
         console.log(id);
         $http
-            .delete(BASE_API + 'delete/' + id)
+            .delete(BASE_API + 'delete.html/' + id)
             .then(function (res) {
                 // getCust();
                 // console.log(res);
@@ -87,7 +87,7 @@ function CustController($scope,$http,$window,Upload,$modal) {
         console.log(vm.message);
 
         var modalInstance = $modal.open({
-            templateUrl: 'delete.html',
+            templateUrl: 'delete.html.html',
             controller: ModalInstanceCtrl,
             scope: $scope,
             resolve: {
@@ -104,7 +104,7 @@ function CustController($scope,$http,$window,Upload,$modal) {
 
         $scope.delete = function () {
             $http({
-                url: '/delete/' + $scope._id,
+                url: '/delete.html/' + $scope._id,
                 method: 'DELETE'
             })
             $modalInstance.dismiss();
