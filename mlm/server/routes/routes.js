@@ -5,7 +5,6 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 
-var Custlist = require('../models/custlist');
 var Cust = require('../models/customer');
 
 var storage = multer.diskStorage({
@@ -15,9 +14,9 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, callback) {
         var file1=file.originalname.split(".");
-        req.body.file = file1[0]+"_"+Date.now()+"."+file1[file1.length -1];
-        console.log("file:"+req.body.file);
-        callback(null,req.body.file);
+        req.body.profile = file1[0]+"_"+Date.now()+"."+file1[file1.length -1];
+        console.log("file:"+req.body.profile);
+        callback(null,req.body.profile);
     }
 });
 
@@ -32,20 +31,8 @@ router.get('/get', function (req, res) {
     });
 });
 
-router.post('/addcust', function (req, res) {
-
-    var cust = new Custlist();
-    cust.name = req.body.name;
-
-    cust.save(function (err) {
-        if (err)
-            res.send(err);
-        res.send("Cust added!!");
-    });
-});
-
 router.get('/getparent', function (req, res) {
-    Custlist.find({}, {__v: 0}, function (err, data) {
+    Cust.find({}, {__v: 0}, function (err, data) {
         if (err)
             return res.send(err);
 
@@ -66,15 +53,15 @@ router.post('/custentry', upload, function (req, res) {
     if (req.body.name == null || req.body.name == undefined )
         return res.status(400).send({error: 'Name is required'});
    
-    var cust = new Cust();      // create a new instance of the emp model
+    var cust = new Cust();      // create a new instance of the customer model
     cust.name = req.body.name;
     cust.parent = req.body.parent;
-    cust.profile = req.body.file;
+    cust.profile = req.body.profile;
    
-    cust.save(function (err) {
+    cust.save(function (err,data) {
         if (err)
             return res.status(409).send(err);
-            return res.json({message: 'customer signed up successfully !!!'});
+            return res.json(data);
     });
 });
 
@@ -88,8 +75,5 @@ router.delete('/delete/:id', function (req, res) {
         res.json({message: 'Successfully deleted'});
     });
 });
-
-
-
 
 module.exports = router;

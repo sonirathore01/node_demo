@@ -6,6 +6,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload-all.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload-shim.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="dirPagination.js"></script>
+
 </head>
 
 <body>
@@ -77,8 +80,8 @@
             			<th>Profile Image</th>
         		</tr>
         		</thead>
-
-        		<tr ng-repeat="i in vm.Emp">
+				<tr	dir-paginate="i in vm.Emp|itemsPerPage:2">
+        		<!--<tr ng-repeat="i in vm.Emp">-->
             			<td>{{ i.name }}</td>
             			<td>{{ i.email }}</td>
             			<td>{{ i.gender }}</td>
@@ -86,7 +89,7 @@
                         <td>{{ i.status }}</td>
             			<td>{{ i.state }}</td>
             			<td>{{ i.city }}</td>
-           				<td><img style="width:100px ;height:50px;" src="../server/uploads/{{i.profileimg}}"/>{{i.profileimg}}</td>
+           				<td><img style="width:100px ;height:50px;" />{{i.profileimg}}</td>
             			<td>
                 			<button type="submit" ng-click="vm.edit(i)" name="edit">Edit</button>
             			</td>
@@ -95,8 +98,11 @@
             			</td>
         		</tr>
     			</table>
+				<dir-pagination-controls max-size="2" direction-links="true" boundary-links="true">
+				</dir-pagination-controls>
 
-    			<script src="./controllers/app.js"></script>
+
+				<!--<script src="./controllers/app.js"></script>-->
     			<script src="./controllers/EmpController.js"></script>
 			</div>
 </body>

@@ -2,17 +2,34 @@
  * Created by lcom73 on 28/1/17.
  */
 angular
-    .module('app',['ngFileUpload'])
+    .module('app',['ngFileUpload','angularUtils.directives.dirPagination'])
     .controller('EmpController', EmpController);
 
 function EmpController($scope,$http,Upload) {
-    var BASE_API = 'http://127.0.0.1:8081/';
+    var BASE_API = 'http://127.0.0.1:8089/';
     var vm = this;
     var flag = 1;
-    getEmp();
-
+    vm.pageno = 1; // initialize page no to 1
+    vm.total_count = 0;
+    vm.itemsPerPage = 2; //this could be a dynamic value from a drop down
     vm.Emp = {};
     vm.newEmp = {};
+
+
+    getEmp(); // Call the function to fetch initial data on page load.
+
+    function getEmp() {
+        vm.Emp = [];
+        $http
+            .get(BASE_API + 'get')
+            .then(function (res) {
+                //console.log(res);
+                vm.Emp = res.data;
+                // vm.total_count = res.total_count; // total data count.
+            }, function (err) {
+                console.log(err);
+            })
+    }
 
         $http
             .get(BASE_API + 'getstate')
@@ -47,18 +64,6 @@ function EmpController($scope,$http,Upload) {
     //     console.log(err);
     // });
 
-    function getEmp() {
-        $http
-            .get(BASE_API + 'get')
-            .then(function (res) {
-                //console.log(res);
-                vm.Emp = res.data;
-
-            }, function (err) {
-                console.log(err);
-            })
-    }
-
     vm.regEmp = function () {
         if(flag == 1) {
             Upload.upload({
@@ -90,7 +95,7 @@ function EmpController($scope,$http,Upload) {
 
     vm.delete = function (id) {
         $http
-            .delete(BASE_API + "delete/" + id)
+            .delete(BASE_API + "delete.html/" + id)
             .then(function (res) {
                 getEmp();
                 console.log(res);

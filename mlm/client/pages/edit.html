@@ -14,12 +14,11 @@
                     <td>
                         <!--<input type="text" ng-model="vm.newCust.parent" list="custlist" placeholder="parent Name" class="form-control" value="parent">-->
                         <!--<datalist id='custlist'  class="form-control" name="parent" disabled="true">-->
-                            <!--<option ng-repeat="cust in vm.parents" value="{{cust.name}}"> {{cust.name}}</option>-->
+                        <!--<option ng-repeat="cust in vm.parents" value="{{cust.name}}"> {{cust.name}}</option>-->
                         <!--</datalist>-->
                         <select name="category-group" id="parent"
-                                ng-model="vm.newCust.parent">
-                            <option ng-repeat="p in vm.parents" value={{p.name}}>{{p.name}}</option>
-                        </select>
+                                ng-model="vm.newCust.parent"
+                                ng-options="custlist as custlist.name for custlist in vm.parents"></select>
                     </td>
                 </tr>
                 <tr>
@@ -33,12 +32,14 @@
                 <tr>
                     <th class="control-label"></th>
                     <td>
-                        <button id="sign_up" name="signup" type="submit" ng-click="vm.custEntry()" class="btn btn-success" ui-sref="custrecords">Submit</button>
-
+                        <button id="sign_up" name="signup" type="submit" ng-click="vm.update(i_id)" class="btn btn-success" ui-sref="custrecords">update</button>
                     </td>
                 </tr>
             </table>
         </fieldset>
     </form>
-
+    <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-click="update()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
 </div>
